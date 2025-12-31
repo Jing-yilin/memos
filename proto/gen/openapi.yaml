@@ -1054,6 +1054,195 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /api/v1/sticker-packs:
+        get:
+            tags:
+                - StickerService
+            description: ListStickerPacks lists all sticker packs.
+            operationId: StickerService_ListStickerPacks
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListStickerPacksResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        post:
+            tags:
+                - StickerService
+            description: CreateStickerPack creates a new sticker pack.
+            operationId: StickerService_CreateStickerPack
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/StickerPack'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/StickerPack'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/sticker-packs/{sticker-pack}:
+        get:
+            tags:
+                - StickerService
+            description: GetStickerPack returns a sticker pack by name.
+            operationId: StickerService_GetStickerPack
+            parameters:
+                - name: sticker-pack
+                  in: path
+                  description: The sticker-pack id.
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/StickerPack'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        delete:
+            tags:
+                - StickerService
+            description: DeleteStickerPack deletes a sticker pack by name.
+            operationId: StickerService_DeleteStickerPack
+            parameters:
+                - name: sticker-pack
+                  in: path
+                  description: The sticker-pack id.
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        patch:
+            tags:
+                - StickerService
+            description: UpdateStickerPack updates a sticker pack.
+            operationId: StickerService_UpdateStickerPack
+            parameters:
+                - name: sticker-pack
+                  in: path
+                  description: The sticker-pack id.
+                  required: true
+                  schema:
+                    type: string
+                - name: updateMask
+                  in: query
+                  description: The update mask applies to the sticker pack.
+                  schema:
+                    type: string
+                    format: field-mask
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/StickerPack'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/StickerPack'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/sticker-packs/{sticker-pack}/stickers:
+        post:
+            tags:
+                - StickerService
+            description: CreateSticker creates a new sticker in a pack.
+            operationId: StickerService_CreateSticker
+            parameters:
+                - name: sticker-pack
+                  in: path
+                  description: The sticker-pack id.
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Sticker'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Sticker'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/sticker-packs/{sticker-pack}/stickers/{sticker}:
+        delete:
+            tags:
+                - StickerService
+            description: DeleteSticker deletes a sticker by name.
+            operationId: StickerService_DeleteSticker
+            parameters:
+                - name: sticker-pack
+                  in: path
+                  description: The sticker-pack id.
+                  required: true
+                  schema:
+                    type: string
+                - name: sticker
+                  in: path
+                  description: The sticker id.
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /api/v1/users:
         get:
             tags:
@@ -2377,6 +2566,13 @@ components:
                     items:
                         $ref: '#/components/schemas/Shortcut'
                     description: The list of shortcuts.
+        ListStickerPacksResponse:
+            type: object
+            properties:
+                stickerPacks:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/StickerPack'
         ListUserNotificationsResponse:
             type: object
             properties:
@@ -2809,6 +3005,81 @@ components:
                         $ref: '#/components/schemas/GoogleProtobufAny'
                     description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
             description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
+        Sticker:
+            required:
+                - displayName
+                - type
+            type: object
+            properties:
+                name:
+                    type: string
+                    description: |-
+                        The name of the sticker.
+                         Format: sticker-packs/{sticker_pack}/stickers/{sticker}
+                createTime:
+                    readOnly: true
+                    type: string
+                    description: Output only. The creation timestamp.
+                    format: date-time
+                displayName:
+                    type: string
+                    description: The display name of the sticker.
+                content:
+                    type: string
+                    description: |-
+                        The image data of the sticker.
+                         Either content or external_link must be provided.
+                    format: bytes
+                externalLink:
+                    type: string
+                    description: Optional. The external link of the sticker image.
+                type:
+                    type: string
+                    description: The MIME type of the sticker (e.g., image/png, image/webp, image/gif).
+                size:
+                    readOnly: true
+                    type: string
+                    description: Output only. The size of the sticker in bytes.
+                tags:
+                    type: array
+                    items:
+                        type: string
+                    description: Optional. Tags for categorizing the sticker.
+        StickerPack:
+            required:
+                - displayName
+            type: object
+            properties:
+                name:
+                    type: string
+                    description: |-
+                        The name of the sticker pack.
+                         Format: sticker-packs/{sticker_pack}
+                createTime:
+                    readOnly: true
+                    type: string
+                    description: Output only. The creation timestamp.
+                    format: date-time
+                updateTime:
+                    readOnly: true
+                    type: string
+                    description: Output only. The last update timestamp.
+                    format: date-time
+                displayName:
+                    type: string
+                    description: The display name of the sticker pack.
+                description:
+                    type: string
+                    description: Optional. The description of the sticker pack.
+                enabled:
+                    type: boolean
+                    description: Whether the sticker pack is enabled.
+                stickers:
+                    readOnly: true
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Sticker'
+                    description: Output only. The stickers in this pack.
         StorageSetting_S3Config:
             type: object
             properties:
@@ -3062,4 +3333,5 @@ tags:
     - name: InstanceService
     - name: MemoService
     - name: ShortcutService
+    - name: StickerService
     - name: UserService
