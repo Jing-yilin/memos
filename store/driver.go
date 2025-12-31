@@ -67,4 +67,15 @@ type Driver interface {
 	ListReactions(ctx context.Context, find *FindReaction) ([]*Reaction, error)
 	GetReaction(ctx context.Context, find *FindReaction) (*Reaction, error)
 	DeleteReaction(ctx context.Context, delete *DeleteReaction) error
+
+	// StickerPack model related methods.
+	CreateStickerPack(ctx context.Context, create *StickerPack) (*StickerPack, error)
+	ListStickerPacks(ctx context.Context, find *FindStickerPack) ([]*StickerPack, error)
+	UpdateStickerPack(ctx context.Context, update *UpdateStickerPack) (*StickerPack, error)
+	DeleteStickerPack(ctx context.Context, delete *DeleteStickerPack) error
+
+	// Sticker model related methods.
+	CreateSticker(ctx context.Context, create *Sticker) (*Sticker, error)
+	ListStickers(ctx context.Context, find *FindSticker) ([]*Sticker, error)
+	DeleteSticker(ctx context.Context, delete *DeleteSticker) error
 }
