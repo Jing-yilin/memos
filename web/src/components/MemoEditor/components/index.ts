@@ -5,6 +5,7 @@ export { default as AttachmentListV2 } from "./AttachmentListV2";
 export * from "./EditorContent";
 export * from "./EditorMetadata";
 export * from "./EditorToolbar";
+export { EmojiPickerButton } from "./EmojiPicker";
 export { FocusModeExitButton, FocusModeOverlay } from "./FocusModeOverlay";
 export { LinkMemoDialog } from "./LinkMemoDialog";
 export { LocationDialog } from "./LocationDialog";

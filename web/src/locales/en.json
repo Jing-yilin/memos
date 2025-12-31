@@ -123,6 +123,7 @@
     "save": "Save",
     "no-changes-detected": "No changes detected",
     "focus-mode": "Focus Mode",
+    "search-emoji": "Search emoji...",
     "exit-focus-mode": "Exit Focus Mode",
     "slash-commands": "Type `/` for commands"
   },
@@ -459,6 +460,7 @@
     "rename-tip": "All your memos with this tag will be updated."
   },
   "tooltip": {
+    "insert-emoji": "Insert Emoji",
     "link-memo": "Link Memo",
     "markdown-menu": "Markdown",
     "select-location": "Location",

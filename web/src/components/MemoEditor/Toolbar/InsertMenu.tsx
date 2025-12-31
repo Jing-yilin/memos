@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { MemoRelation } from "@/types/proto/api/v1/memo_service_pb";
 import { useTranslate } from "@/utils/i18n";
-import { LinkMemoDialog, LocationDialog } from "../components";
+import { EmojiPickerButton, LinkMemoDialog, LocationDialog } from "../components";
 import { GEOCODING } from "../constants";
 import { useAbortController, useFileUpload, useLinkMemo, useLocation } from "../hooks";
 import { useEditorContext } from "../state";
@@ -32,6 +32,12 @@ const InsertMenu = (props: InsertMenuProps) => {
 
   // Abort controller for canceling geocoding requests
   const { abort: abortGeocoding, abortAndCreate: createGeocodingSignal } = useAbortController();
+
+  const handleEmojiSelect = (emoji: string) => {
+    if (props.editorRef?.current) {
+      props.editorRef.current.insertText(emoji);
+    }
+  };
 
   const { handleTriggerEnter, handleTriggerLeave, handleContentEnter, handleContentLeave } = useDropdownMenuSubHoverDelay(
     150,
@@ -176,6 +182,8 @@ const InsertMenu = (props: InsertMenuProps) => {
           <div className="px-2 py-1 text-xs text-muted-foreground opacity-80">{t("editor.slash-commands")}</div>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <EmojiPickerButton onEmojiSelect={handleEmojiSelect} disabled={isUploading} />
 
       {/* Hidden file input */}
       <input

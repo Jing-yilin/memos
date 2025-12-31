@@ -24,6 +24,7 @@ export interface EditorToolbarProps {
   onSave: () => void;
   onCancel?: () => void;
   memoName?: string;
+  editorRef?: React.RefObject<EditorRefActions>;
 }
 
 export interface EditorMetadataProps {}
@@ -67,6 +68,7 @@ export interface InsertMenuProps {
   onLocationChange: (location?: Location) => void;
   onToggleFocusMode?: () => void;
   memoName?: string;
+  editorRef?: React.RefObject<EditorRefActions>;
 }
 
 export interface TagSuggestionsProps {
